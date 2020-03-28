@@ -35,7 +35,7 @@ type TaskCallback = pull.SourceCallback<DataType>
 
 interface Task {
   length?: number
-  cb: pull.SourceCallback<DataType>
+  cb: TaskCallback
 }
 
 export default function (timeout: number = 0) {
