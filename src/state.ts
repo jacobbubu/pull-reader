@@ -16,7 +16,7 @@ export class State {
   }
 
   has(n?: number) {
-    if (!n) {
+    if (n === undefined) {
       return this._length > 0
     }
     return this._length >= n
@@ -24,7 +24,7 @@ export class State {
 
   get(n?: number) {
     let tmpLength: number
-    if (!n || n >= this._length) {
+    if (n === undefined || n === this._length) {
       this._length = 0
       const tmpBuffer = this._buffers
       this._buffers = []
@@ -33,8 +33,7 @@ export class State {
       } else {
         return Buffer.concat(tmpBuffer)
       }
-    }
-    if (this._buffers.length > 1 && n <= this._buffers[0].length) {
+    } else if (this._buffers.length > 1 && n <= this._buffers[0].length) {
       tmpLength = this._buffers[0].length
       const buf = this._buffers[0].slice(0, n)
       if (n === tmpLength) {
@@ -44,8 +43,7 @@ export class State {
       }
       this._length -= n
       return buf
-    }
-    if (n < this._length) {
+    } else if (n < this._length) {
       const out: Buffer[] = []
       let len = 0
 
