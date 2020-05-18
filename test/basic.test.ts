@@ -37,7 +37,7 @@ describe('basic', () => {
     pull(pull.values([bytes]), split(), reader)
     reader.read(null, (err, data) => {
       expect(err).toBeFalsy()
-      expect(data.length).toBeGreaterThan(0)
+      expect(data!.length).toBeGreaterThan(0)
       done()
     })
   })
@@ -47,7 +47,7 @@ describe('basic', () => {
     pull(pull.values([bytes]), split(), reader)
 
     pull(
-      reader.read(null) as pull.Source<Buffer>,
+      reader.read(null),
       pull.collect(function (err, data: Buffer[]) {
         expect(err).toBeFalsy()
         const _data = Buffer.concat(data)
@@ -67,10 +67,8 @@ describe('basic', () => {
       reader.read(6, (_, hello) => {
         setTimeout(function () {
           reader.read(5, function (err, there) {
-            if (err) {
-              throw new Error('unexpected end')
-            }
-            expect(Buffer.concat([hello, there]).toString()).toEqual('hello there')
+            expect(err).toBeFalsy()
+            expect(Buffer.concat([hello!, there!]).toString()).toEqual('hello there')
             done()
           })
         }, 10)

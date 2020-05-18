@@ -9,7 +9,7 @@ function isFunction(f: any) {
   return 'function' === typeof f
 }
 
-type DataType = any
+type DataType = Buffer
 
 // Wrap the original read
 function maxDelay(rawRead: pull.Source<DataType>, delay: number) {
@@ -94,7 +94,7 @@ export default function (timeout: number = 0) {
             return drain()
           }
           // Otherwise, we cache the data first and then try to drain the cache again
-          state.add(data)
+          state.add(data!)
           more()
         })
       }
