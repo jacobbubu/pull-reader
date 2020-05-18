@@ -163,7 +163,9 @@ export default function (timeout: number = 0) {
           requestQueue.push({ cb })
           more()
         } else {
+          reading = true
           maxDelay(rawRead, normalizedTimeout)(abort, function (err, data) {
+            reading = false
             cb(err, data)
           })
         }
